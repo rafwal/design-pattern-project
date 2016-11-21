@@ -1,4 +1,4 @@
-package pl.rwalski.config.profiles;
+package pl.edu.agh.config.profiles;
 
 import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.RunScript;

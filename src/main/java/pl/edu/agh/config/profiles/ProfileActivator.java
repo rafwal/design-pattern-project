@@ -1,4 +1,4 @@
-package pl.rwalski.config.profiles;
+package pl.edu.agh.config.profiles;
 
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;

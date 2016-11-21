@@ -1,4 +1,4 @@
-package pl.rwalski.config;
+package pl.edu.agh.config;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "pl.rwalski.repository")
+@EnableJpaRepositories(basePackages = "pl.edu.agh.repository.")
 @EnableTransactionManagement
 public class JpaConfiguration {
 
@@ -22,7 +22,7 @@ public class JpaConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
-        entityManagerFactory.setPackagesToScan("pl.rwalski.model");
+        entityManagerFactory.setPackagesToScan("pl.edu.agh.model");
         entityManagerFactory.setPersistenceProvider(new HibernatePersistenceProvider());
         entityManagerFactory.setJpaPropertyMap(null);
         return entityManagerFactory;

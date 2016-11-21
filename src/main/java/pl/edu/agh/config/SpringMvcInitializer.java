@@ -1,4 +1,4 @@
-package pl.rwalski.config;
+package pl.edu.agh.config;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoader;
@@ -28,12 +28,12 @@ public class SpringMvcInitializer implements WebApplicationInitializer {
         servletContext.addListener(new ContextLoaderListener(context));
 
         // spring profile activator
-        servletContext.setInitParameter(ContextLoader.CONTEXT_INITIALIZER_CLASSES_PARAM, "pl.rwalski.config.profiles.ProfileActivator");
+        servletContext.setInitParameter(ContextLoader.CONTEXT_INITIALIZER_CLASSES_PARAM, "pl.edu.agh.config.profiles.ProfileActivator");
     }
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("pl.rwalski");
+        context.setConfigLocation("pl.edu.agh.");
         return context;
     }
 }
