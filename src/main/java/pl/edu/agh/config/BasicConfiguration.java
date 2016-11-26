@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "pl.edu.agh.pl")
+@ComponentScan(basePackages = "pl.edu.agh")
 public class BasicConfiguration {
 
 }

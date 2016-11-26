@@ -33,7 +33,7 @@ public class SpringMvcInitializer implements WebApplicationInitializer {
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("pl.edu.agh.");
+        context.setConfigLocation("pl.edu.agh");
         return context;
     }
 }

@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "pl.edu.agh.repository.")
+@EnableJpaRepositories(basePackages = "pl.edu.agh.repository")
 @EnableTransactionManagement
 public class JpaConfiguration {
 

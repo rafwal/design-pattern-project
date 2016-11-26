@@ -43,14 +43,6 @@ public class LocalConfig {
         RunScript.execute(dataSource.getConnection(), new InputStreamReader(resourceAsStream));
     }
 
-    @Bean(destroyMethod = "stop", initMethod = "start")
-    @Autowired
-    public Server h2TcpServer(DataSource dataSource) throws SQLException {
-        //just to make sure dataSource really is created
-        return Server.createTcpServer("-tcp", "-tcpPort", "12322", "-tcpAllowOthers");
-    }
-    //to connect via tcp, in URL field type jdbc:h2:tcp://localhost:12322//mem:loading-tests
-
 
     @Bean(destroyMethod = "stop", initMethod = "start")
     @Autowired
