@@ -1,4 +1,4 @@
-package pl.edu.agh.model;
+package pl.edu.agh.model.definition;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +34,6 @@ public class ThreadGroup {
     private Integer delay;
 
     @OneToMany(mappedBy = "threadGroup")
-    private List<Request> requests;
+    private List<Test> tests;
 
 }

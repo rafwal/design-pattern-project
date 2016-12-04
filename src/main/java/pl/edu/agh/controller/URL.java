@@ -14,7 +14,8 @@ public class URL {
     }
 
     public static class Request {
-        public static final String ALL = "/requests";
+        public static final String ALL = "/tests";
         public static final String BY_ID = ALL + "/{requestId}";
+        public static final String EXECUTE_BY_ID = BY_ID + "/execute";
     }
 }

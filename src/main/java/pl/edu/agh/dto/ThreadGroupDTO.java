@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.edu.agh.model.ThreadGroup;
+import pl.edu.agh.model.definition.ThreadGroup;
 
 @Data
 @Builder

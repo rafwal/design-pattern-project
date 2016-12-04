@@ -9,4 +9,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages = "pl.edu.agh")
 public class BasicConfiguration {
 
+
 }
