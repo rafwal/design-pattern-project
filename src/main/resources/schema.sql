@@ -9,7 +9,7 @@ BEGIN;
 CREATE SEQUENCE ThreadGroupSequence;
 
 CREATE TABLE ThreadGroup (
-  id INT8 PRIMARY KEY,
+  id BIGINT PRIMARY KEY,
   threadsCount INT8 NOT NULL,
   rampUpPeriod INT8 NOT NULL,
   loopCount INT8 NOT NULL,
@@ -17,25 +17,38 @@ CREATE TABLE ThreadGroup (
 );
 
 
-CREATE SEQUENCE TestSequence;
+CREATE SEQUENCE TestDefinitionSequence;
 
-CREATE TABLE Test (
-  id INT8 PRIMARY KEY,
-  threadgroupid INT8 NOT NULL REFERENCES ThreadGroup(id),
-  url VARCHAR(2000) NOT NULL,
-  method VARCHAR(6) NOT NULL,
-  body TEXT
+CREATE TABLE TestDefinition (
+  id BIGINT PRIMARY KEY,
+  json TEXT,
+  pluginName VARCHAR(30)
 );
 
-CREATE TABLE Header (
-  testid INT8 NOT NULL REFERENCES Test(id),
-  key varchar(255) NOT NULL,
-  value text NOT NULL,
+CREATE SEQUENCE TestExecutionSequence;
 
-  PRIMARY KEY (testid, key)
+CREATE TABLE TestExecution (
+  id BIGINT PRIMARY KEY,
+  testDefinitionId BIGINT REFERENCES TestDefinition(id),
+  threadGroupId BIGINT REFERENCES ThreadGroup(id),
+  startTime TIMESTAMP,
+  endTime TIMESTAMP,
+  state VARCHAR(15)
 );
 
-INSERT INTO ThreadGroup VALUES(nextval('ThreadGroupSequence'), 1, 1, 1, 0);
-INSERT INTO Test VALUES(nextval('TestSequence'), 1, 'https://google.pl', 'GET', null);
+CREATE SEQUENCE SingleExecutionSequence;
+
+CREATE TABLE SingleExecution (
+  id BIGINT PRIMARY KEY,
+  testExecutionId BIGINT REFERENCES TestExecution(id),
+  startTime TIMESTAMP,
+  endTime TIMESTAMP,
+  output TEXT,
+  threadNo INT8
+);
+
+
+INSERT INTO ThreadGroup VALUES(nextval('ThreadGroupSequence'), 10, 1, 5, 1000);
+INSERT INTO TestDefinition VALUES(nextval('TestDefinitionSequence'), '{"url": "http://www.google.pl/","method": "GET","body": null,"headers": {"header": "value"}}', 'HTTP');
 
 COMMIT;
