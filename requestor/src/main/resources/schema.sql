@@ -31,6 +31,7 @@ CREATE TABLE TestExecution (
   id BIGINT PRIMARY KEY,
   testDefinitionId BIGINT REFERENCES TestDefinition(id),
   threadGroupId BIGINT REFERENCES ThreadGroup(id),
+  timeout INT8,
   startTime TIMESTAMP,
   endTime TIMESTAMP,
   state VARCHAR(15)
