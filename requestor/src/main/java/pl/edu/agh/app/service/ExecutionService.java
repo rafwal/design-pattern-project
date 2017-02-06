@@ -17,6 +17,7 @@ import pl.edu.agh.app.repository.TestExecutionRepository;
 import pl.edu.agh.app.repository.ThreadGroupRepository;
 import pl.edu.agh.app.model.entity.definition.TestDefinition;
 import pl.edu.agh.app.model.entity.definition.ThreadGroup;
+import pl.edu.agh.listener.Listener;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -45,6 +46,8 @@ public class ExecutionService {
     @Autowired
     private ExecutionPluginsLoader executionPluginsLoader;
 
+    @Autowired
+    private Listener listener;
 
     public CallbackDTO runTests(ExecuteDTO executeDTO) {
 
@@ -59,13 +62,19 @@ public class ExecutionService {
         TestExecution afterSave = testExecutionRepository.saveAndFlush(testExecution);
 
         CompletableFuture
-                .runAsync(() -> execute(threadGroup, entityDefinition, task, afterSave))
+                .runAsync(() -> listener.doStartListening())
+                .thenRunAsync(() -> execute(threadGroup, entityDefinition, task, afterSave))
+                .thenRunAsync(() -> listener.stopListening())
+                .thenRunAsync(() -> listener.processTimers(afterSave))
+
                 .thenRun(() -> System.out.println("EELO"));
 
         return new CallbackDTO(2L);
     }
 
     private void execute(ThreadGroup threadGroup, EntityDefinition entityDefinition, Task task, TestExecution testExecution) {
+
+        System.out.println("EXECUTING STARTS");
 
         ExecutorService executorService = Executors.newFixedThreadPool(threadGroup.getThreadsCount());
 
@@ -96,6 +105,8 @@ public class ExecutionService {
         testExecutionRepository.saveAndFlush(testExecution);
 
         singleExecutionRepository.save(singleExecutions);
+
+        System.out.println("EXECUTING ENDS");
     }
 
 

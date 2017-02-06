@@ -3,11 +3,17 @@ package pl.edu.agh.app.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
 
 import java.io.IOException;
 
 public class JsonUtil {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    public static final ObjectMapper MAPPER;
+
+    static {
+        MAPPER = new ObjectMapper();
+        MAPPER.registerModule(new GuavaModule());
+    }
 
     public static String toJson(Object jsonObject){
         try {
@@ -24,4 +30,6 @@ public class JsonUtil {
             throw new RuntimeException(e);
         }
     }
+
+
 }

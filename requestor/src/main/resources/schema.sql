@@ -48,6 +48,15 @@ CREATE TABLE SingleExecution (
   threadNo INT8
 );
 
+CREATE SEQUENCE TimerSequence;
+
+CREATE TABLE Timer (
+  id BIGINT PRIMARY KEY,
+  testExecutionId BIGINT REFERENCES TestExecution(id),
+  name VARCHAR(40),
+  startTime TIMESTAMP,
+  endTime TIMESTAMP
+);
 
 INSERT INTO ThreadGroup VALUES(nextval('ThreadGroupSequence'), 10, 1, 5, 1000);
 INSERT INTO TestDefinition VALUES(nextval('TestDefinitionSequence'), '{"url": "http://www.google.pl/","method": "GET","body": null,"headers": {"header": "value"}}', 'HTTP');
