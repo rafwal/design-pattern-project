@@ -1,16 +1,17 @@
-package pl.edu.agh.lib.metrics;
+package pl.edu.agh.lib.metrics.timers;
 
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+import pl.edu.agh.lib.metrics.timers.Timer;
 
-
+/*
+    holds all timers in memory
+ */
 public class TimerRegistry {
 
-    private String appName;
     private Multimap<String, Timer> timers;
-
 
     public Multimap<String, Timer> getTimersAndReset() {
         Multimap<String,Timer> oldTimers = timers;
@@ -18,9 +19,8 @@ public class TimerRegistry {
         return oldTimers;
     }
 
-    public TimerRegistry(String appName) {
+    public TimerRegistry() {
         timers = Multimaps.synchronizedMultimap(HashMultimap.create());
-        this.appName = appName;
     }
 
     public Timer timer(String timerName) {
@@ -30,7 +30,4 @@ public class TimerRegistry {
         return timer;
     }
 
-    public String getAppName() {
-        return appName;
-    }
 }

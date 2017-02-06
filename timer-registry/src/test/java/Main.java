@@ -1,7 +1,7 @@
-import pl.edu.agh.lib.metrics.BridgeFacade;
-import pl.edu.agh.lib.metrics.ScheduledSender;
-import pl.edu.agh.lib.metrics.Timer;
-import pl.edu.agh.lib.metrics.TimerRegistry;
+import pl.edu.agh.lib.metrics.facade.RequestorFacade;
+import pl.edu.agh.lib.metrics.scheduler.ScheduledSender;
+import pl.edu.agh.lib.metrics.timers.Timer;
+import pl.edu.agh.lib.metrics.timers.TimerRegistry;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -10,10 +10,10 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String[] args) throws InterruptedException, UnknownHostException {
 
-        TimerRegistry timerRegistry = new TimerRegistry("app");
-        BridgeFacade bridge = new BridgeFacade(InetAddress.getLocalHost(), "app", 1234);
+        TimerRegistry timerRegistry = new TimerRegistry();
+        RequestorFacade bridge = new RequestorFacade(InetAddress.getLocalHost(), "app", 1234);
         ScheduledSender scheduledSender = new ScheduledSender(timerRegistry, bridge);
-        scheduledSender.startSendingWithInterval(21);
+        scheduledSender.startSendingWithIntervalInSeconds(21);
 
         while(true) {
             IntStream.range(0, 10).forEach(

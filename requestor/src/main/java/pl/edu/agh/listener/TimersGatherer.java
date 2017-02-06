@@ -14,7 +14,7 @@ public class TimersGatherer {
 
 
     public void addTimers(String json) {
-        Multimap<String, TimerDTO> newTimers = getMultiMap(json);
+        Multimap<String, TimerDTO> newTimers = convertJsonToMultimap(json);
         if (newTimers != null) {
             timers.putAll(newTimers);
         } else {
@@ -22,7 +22,7 @@ public class TimersGatherer {
         }
     }
 
-    private Multimap<String, TimerDTO> getMultiMap(String json) {
+    private Multimap<String, TimerDTO> convertJsonToMultimap(String json) {
         try {
             return JsonUtil.MAPPER.readValue(
                     JsonUtil.MAPPER.treeAsTokens(JsonUtil.MAPPER.readTree(json)),

@@ -18,6 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+
+//design-pattern AbstractFactory
 @Component
 public class ExecutionPluginsLoader {
 

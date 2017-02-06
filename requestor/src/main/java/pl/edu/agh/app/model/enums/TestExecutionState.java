@@ -5,5 +5,5 @@ public enum TestExecutionState {
     IN_PROGRESS, //test is executing
     TIMED_OUT,
     ERROR,
-    FINISHED; //test finished successfully
+    FINISHED //test finished successfully
 }

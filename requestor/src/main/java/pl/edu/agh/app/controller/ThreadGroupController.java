@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.app.util.URL;
-import pl.edu.agh.app.model.dto.ThreadGroupDTO;
+import pl.edu.agh.app.dto.ThreadGroupDTO;
 import pl.edu.agh.app.service.ThreadGroupService;
 
 import java.util.List;

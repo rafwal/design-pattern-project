@@ -14,5 +14,4 @@ public interface EntityDefinition {
         return JsonUtil.toJson(entity);
     }
 
-
 }

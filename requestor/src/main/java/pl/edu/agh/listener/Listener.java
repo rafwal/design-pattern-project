@@ -23,11 +23,12 @@ public class Listener {
     @Autowired
     private TimerRepository timerRepository;
 
-
+    //todo properties
     private final int port = 1234;
 
     ServerSocket serverSocket;
 
+    //just one gatherer can work in the same time... change it?
     public void doStartListening() {
         timersGatherer = new TimersGatherer();
         openServerSocket();
@@ -52,10 +53,6 @@ public class Listener {
                 new InputStreamReader(socket.getInputStream()));
 
         String line;
-        if (!"SEND TIMERS".equals(in.readLine())) {
-            System.err.println("Request ejected on step one");
-        }
-
         if (!"SEND TIMERS".equals(in.readLine())) {
             System.err.println("Request ejected on step one");
         }

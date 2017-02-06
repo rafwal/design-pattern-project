@@ -1,4 +1,4 @@
-package pl.edu.agh.lib.metrics;
+package pl.edu.agh.lib.metrics.timers;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -23,7 +23,6 @@ public class Timer implements AutoCloseable {
     public Long getStartTime() {
         return startTime.toEpochMilli();
     }
-
 
     public Long getEndTime() {
         return endTime.toEpochMilli();

@@ -2,8 +2,8 @@ package pl.edu.agh.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.app.model.dto.CallbackDTO;
-import pl.edu.agh.app.model.dto.ExecuteDTO;
+import pl.edu.agh.app.dto.RunTestCallbackDTO;
+import pl.edu.agh.app.dto.ExecuteDTO;
 import pl.edu.agh.app.model.entity.execution.SingleExecution;
 import pl.edu.agh.app.model.entity.execution.TestExecution;
 import pl.edu.agh.app.model.enums.TestExecutionState;
@@ -49,7 +49,7 @@ public class ExecutionService {
     @Autowired
     private Listener listener;
 
-    public CallbackDTO runTests(ExecuteDTO executeDTO) {
+    public RunTestCallbackDTO runTests(ExecuteDTO executeDTO) {
 
         TestDefinition testDef = getTestDefinition(executeDTO);
         ThreadGroup threadGroup = getThreadGroup(executeDTO);
@@ -59,17 +59,17 @@ public class ExecutionService {
         Task task = plugin.getTask();
 
         TestExecution testExecution = buildTestExecution(testDef, threadGroup, executeDTO.getTimeout());
-        TestExecution afterSave = testExecutionRepository.saveAndFlush(testExecution);
+        final TestExecution afterSave = testExecutionRepository.saveAndFlush(testExecution);
 
         CompletableFuture
                 .runAsync(() -> listener.doStartListening())
                 .thenRunAsync(() -> execute(threadGroup, entityDefinition, task, afterSave))
                 .thenRunAsync(() -> listener.stopListening())
                 .thenRunAsync(() -> listener.processTimers(afterSave))
+                //todo
+                .thenRun(() -> System.out.println(String.format("TestExecution %s ended", afterSave.getId())));
 
-                .thenRun(() -> System.out.println("EELO"));
-
-        return new CallbackDTO(2L);
+        return new RunTestCallbackDTO(afterSave.getId());
     }
 
     private void execute(ThreadGroup threadGroup, EntityDefinition entityDefinition, Task task, TestExecution testExecution) {

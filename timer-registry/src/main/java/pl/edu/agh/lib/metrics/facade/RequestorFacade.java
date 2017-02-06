@@ -1,4 +1,4 @@
-package pl.edu.agh.lib.metrics;
+package pl.edu.agh.lib.metrics.facade;
 
 
 import java.io.IOException;
@@ -6,12 +6,18 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class BridgeFacade {
+
+/*
+    Communicates with requstor, now only sends collected data
+ */
+
+//design-pattern facade
+public class RequestorFacade {
     private InetAddress address;
     private int port;
     private String appName;
 
-    public BridgeFacade(InetAddress address, String appName, int port) {
+    public RequestorFacade(InetAddress address, String appName, int port) {
         this.address = address;
         this.appName = appName;
         this.port = port;

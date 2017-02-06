@@ -1,4 +1,4 @@
-package pl.edu.agh.lib.metrics;
+package pl.edu.agh.lib.metrics.util;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,7 +8,7 @@ public class JsonUtils {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    String toJson(Object object) {
+    public String toJson(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
