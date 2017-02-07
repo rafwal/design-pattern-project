@@ -26,4 +26,6 @@ public class TestDefinition {
     private String json;
 
     private String pluginName;
+
+    private String appName;
 }

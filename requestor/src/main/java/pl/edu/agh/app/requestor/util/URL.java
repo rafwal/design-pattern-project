@@ -16,8 +16,14 @@ public class URL {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Test {
         public static final String ALL = "/tests";
-        public static final String BY_ID = ALL + "/{requestId}";
+        public static final String BY_ID = ALL + "/{testDefinitionId}";
         public static final String EXECUTE_BY_ID = BY_ID + "/runTests";
+    }
+
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class TestExecution {
+        public static final String ALL = "/testExecutions";
+        public static final String BY_ID = ALL + "/{testExecutionId}";
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -26,6 +32,7 @@ public class URL {
         public static final String STOP = "/gatherer/stop";
     }
 
+    //todo change it
     public static final String EXECUTE = "/runTests";
 
 

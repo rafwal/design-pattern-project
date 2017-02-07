@@ -21,7 +21,8 @@ CREATE SEQUENCE TestDefinitionSequence;
 CREATE TABLE TestDefinition (
   id BIGINT PRIMARY KEY,
   json TEXT,
-  pluginName VARCHAR(30)
+  pluginName VARCHAR(30),
+  appName VARCHAR(30)
 );
 
 CREATE SEQUENCE TestExecutionSequence;
@@ -52,12 +53,13 @@ CREATE SEQUENCE TimerSequence;
 CREATE TABLE Timer (
   id BIGINT PRIMARY KEY,
   testExecutionId BIGINT REFERENCES TestExecution(id),
+  appName VARCHAR(40),
   name VARCHAR(40),
   startTime TIMESTAMP,
   endTime TIMESTAMP
 );
 
-INSERT INTO ThreadGroup VALUES(nextval('ThreadGroupSequence'), 10, 5, 1000);
-INSERT INTO TestDefinition VALUES(nextval('TestDefinitionSequence'), '{"url": "http://www.google.pl/","method": "GET","body": null,"headers": {"header": "value"}}', 'HTTP');
-
+INSERT INTO ThreadGroup(id, threadsCount, loopCount, delay) VALUES(nextval('ThreadGroupSequence'), 10, 5, 1000);
+INSERT INTO TestDefinition VALUES(nextval('TestDefinitionSequence'), '{"url": "http://www.google.pl/","method": "GET","body": null,"headers": {"header": "value"}}', 'HTTP', 'some');
+INSERT INTO TestDefinition VALUES(nextval('TestDefinitionSequence'), '{"url": "http://localhost:8082/people","method": "GET","body": null,"headers": null}', 'HTTP', 'app');
 COMMIT;

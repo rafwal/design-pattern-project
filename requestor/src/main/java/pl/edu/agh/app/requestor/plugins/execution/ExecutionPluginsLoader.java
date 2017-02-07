@@ -19,7 +19,7 @@ import java.util.Optional;
 @Component
 public class ExecutionPluginsLoader {
 
-    private static final String PACKAGE = "pl.edu.agh.app.plugins.execution";
+    private static final String PACKAGE = "pl.edu.agh.app.requestor.plugins.execution";
 
 
     @Getter

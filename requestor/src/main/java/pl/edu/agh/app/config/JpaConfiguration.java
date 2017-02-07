@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "pl.edu.agh.app.repository")
+@EnableJpaRepositories(basePackages = "pl.edu.agh.app.requestor.repository")
 @EnableTransactionManagement
 public class JpaConfiguration {
 
@@ -22,7 +22,7 @@ public class JpaConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
-        entityManagerFactory.setPackagesToScan("pl.edu.agh.app.model");
+        entityManagerFactory.setPackagesToScan("pl.edu.agh.app.requestor.model");
         entityManagerFactory.setPersistenceProvider(new HibernatePersistenceProvider());
         entityManagerFactory.setJpaPropertyMap(null);
         return entityManagerFactory;

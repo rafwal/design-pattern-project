@@ -26,10 +26,11 @@ public class TimersRegistryAcceptor {
     //todo properties
     private final int port = 1234;
 
+
     ServerSocket serverSocket;
 
     //just one gatherer can work in the same time... change it?
-    public void doStartListening() {
+    public void doStartListening(String appName) {
         timersGatherer = new TimersGatherer();
         openServerSocket();
         System.out.println("Socket open at port  " + port);
@@ -37,8 +38,8 @@ public class TimersRegistryAcceptor {
         new Thread(() -> {
             try {
                 while (true) {
-                        Socket socket = serverSocket.accept();
-                        handleSocket(socket);
+                    Socket socket = serverSocket.accept();
+                    handleSocket(socket, appName);
                 }
             } catch (SocketException se) {
                 System.err.println("Socket closed");
@@ -48,31 +49,6 @@ public class TimersRegistryAcceptor {
         }).start();
     }
 
-    private void handleSocket(Socket socket) throws IOException {
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(socket.getInputStream()));
-
-        String line;
-        if (!"SEND TIMERS".equals(in.readLine())) {
-            System.err.println("Request ejected on step one");
-        }
-
-        StringBuilder sb = new StringBuilder();
-        while(!(line = in.readLine()).equals("END")) {
-            sb.append(line);
-        }
-        socket.close();
-        timersGatherer.addTimers(sb.toString());
-    }
-
-    private void openServerSocket() {
-
-        try {
-            this.serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot open socket port " + port, e);
-        }
-    }
 
     public void stopListening() {
         try {
@@ -85,7 +61,7 @@ public class TimersRegistryAcceptor {
 
     public void stopListeningIn(long seconds) {
         try {
-            wait(seconds*1000);
+            Thread.sleep(seconds * 1000);
             stopListening();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -93,7 +69,7 @@ public class TimersRegistryAcceptor {
 
     }
 
-    public void processTimers(TestExecution afterSave) {
+    public void processTimers(TestExecution afterSave, String appName) {
         if (timersGatherer.getTimers().isEmpty()) {
             System.err.println("No timers registered");
             return;
@@ -107,10 +83,41 @@ public class TimersRegistryAcceptor {
                     timers.forEach(t -> {
                         t.setName(k);
                         t.setTestExecution(afterSave);
+                        t.setAppName(appName);
                     });
                     timerRepository.save(timers);
                 }
         );
         System.err.println("Timers processed");
+    }
+
+    private void handleSocket(Socket socket, String appName) throws IOException {
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+
+        String line;
+        if (!"SEND TIMERS".equals(in.readLine())) {
+            System.err.println("Request ejected on step one");
+        }
+
+        if (!appName.equals(in.readLine())) {
+            System.err.println("Request ejected on step two - wrong app name");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!(line = in.readLine()).equals("END")) {
+            sb.append(line);
+        }
+        socket.close();
+        timersGatherer.addTimers(sb.toString(), appName);
+    }
+
+    private void openServerSocket() {
+
+        try {
+            this.serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot open socket port " + port, e);
+        }
     }
 }

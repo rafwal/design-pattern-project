@@ -30,6 +30,7 @@ public class Timer {
     private Instant startTime;
     private Instant endTime;
     private String name;
+    private String appName;
 
     @OneToOne
     @JoinColumn(name = "testExecutionId")

@@ -12,6 +12,8 @@ public class TimerDTO {
 
     private Long endTime;
 
+    private String appName;
+
     public Timer toEntity() {
 
         return  Timer.builder()
