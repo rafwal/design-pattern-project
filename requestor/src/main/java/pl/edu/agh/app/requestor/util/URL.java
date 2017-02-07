@@ -24,6 +24,8 @@ public class URL {
     public static class TestExecution {
         public static final String ALL = "/testExecutions";
         public static final String BY_ID = ALL + "/{testExecutionId}";
+        public static final String DETAILED_RESULTS = BY_ID + "/results/detailed";
+        public static final String AVERAGE_RESULTS = BY_ID + "/results/average";
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)

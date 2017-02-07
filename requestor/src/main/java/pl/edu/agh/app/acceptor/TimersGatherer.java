@@ -3,7 +3,6 @@ package pl.edu.agh.app.acceptor;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.Getter;
-import org.springframework.util.StringUtils;
 import pl.edu.agh.app.requestor.util.JsonUtil;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class TimersGatherer {
     public void addTimers(String json, String appName) {
         Multimap<String, TimerDTO> newTimers = convertJsonToMultimap(json);
 
-        if (!newTimers.isEmpty()) {
+        if (newTimers != null && !newTimers.isEmpty()) {
             timers.putAll(newTimers);
             System.err.println("TIMERS ADDED");
         } else {

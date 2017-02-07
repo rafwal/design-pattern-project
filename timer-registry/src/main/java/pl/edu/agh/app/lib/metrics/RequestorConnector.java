@@ -11,7 +11,7 @@ import java.net.Socket;
     Communicates with requstor, now only sends collected data
  */
 
-//design-pattern facade
+//design-pattern connector
 public class RequestorConnector {
     private InetAddress address;
     private int port;

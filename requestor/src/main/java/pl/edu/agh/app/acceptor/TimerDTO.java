@@ -14,6 +14,9 @@ public class TimerDTO {
 
     private String appName;
 
+    //milis
+    private Long duration;
+
     public Timer toEntity() {
 
         return  Timer.builder()

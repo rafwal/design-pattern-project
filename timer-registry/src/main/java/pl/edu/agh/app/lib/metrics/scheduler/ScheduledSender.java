@@ -18,13 +18,18 @@ public class ScheduledSender {
     private final TimerRegistry timerRegistry;
     private final RequestorConnector requestorConnector;
 
+    private ScheduledExecutorService executorService;
     /*
-        handles sending data in interval given inSECONDS
+        handles sending data in interval given in SECONDS
      */
-    public void startSendingWithIntervalInSeconds(long interval) {
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    public void startWithIntervalInSeconds(long interval) {
+        executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleWithFixedDelay(this::sendData,
                 interval, interval, TimeUnit.SECONDS);
+    }
+
+    public void stop() {
+        executorService.shutdown();
     }
 
     /*

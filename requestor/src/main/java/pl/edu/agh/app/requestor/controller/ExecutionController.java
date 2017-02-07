@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.app.requestor.dto.RunTestCallbackDTO;
 import pl.edu.agh.app.requestor.dto.ExecuteDTO;
 import pl.edu.agh.app.requestor.dto.TestExecutionDTO;
-import pl.edu.agh.app.requestor.model.entity.execution.SingleExecution;
 import pl.edu.agh.app.requestor.service.ExecutionService;
 import pl.edu.agh.app.requestor.util.URL;
 
@@ -25,7 +24,7 @@ public class ExecutionController {
         return executionService.runTests(dto);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = URL.TestExecution.BY_ID)
+    @RequestMapping(method = RequestMethod.GET, value = URL.TestExecution.BY_ID)
     public TestExecutionDTO getById(@PathVariable Long testExecutionId) {
         return executionService.getTestExecution(testExecutionId);
     }

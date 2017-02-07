@@ -12,7 +12,7 @@ public class Main {
 
         RequestorConnector bridge = new RequestorConnector(InetAddress.getLocalHost(), "app", 1234);
         ScheduledSender scheduledSender = new ScheduledSender(bridge);
-        scheduledSender.startSendingWithIntervalInSeconds(21);
+        scheduledSender.startWithIntervalInSeconds(21);
 
         while(true) {
             IntStream.range(0, 10).forEach(
