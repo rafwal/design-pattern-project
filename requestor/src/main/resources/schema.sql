@@ -11,7 +11,6 @@ CREATE SEQUENCE ThreadGroupSequence;
 CREATE TABLE ThreadGroup (
   id BIGINT PRIMARY KEY,
   threadsCount INT8 NOT NULL,
-  rampUpPeriod INT8 NOT NULL,
   loopCount INT8 NOT NULL,
   delay INT8
 );
@@ -58,7 +57,7 @@ CREATE TABLE Timer (
   endTime TIMESTAMP
 );
 
-INSERT INTO ThreadGroup VALUES(nextval('ThreadGroupSequence'), 10, 1, 5, 1000);
+INSERT INTO ThreadGroup VALUES(nextval('ThreadGroupSequence'), 10, 5, 1000);
 INSERT INTO TestDefinition VALUES(nextval('TestDefinitionSequence'), '{"url": "http://www.google.pl/","method": "GET","body": null,"headers": {"header": "value"}}', 'HTTP');
 
 COMMIT;
