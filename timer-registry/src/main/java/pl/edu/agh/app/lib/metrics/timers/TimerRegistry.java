@@ -5,18 +5,16 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 
-/*
-    holds all timers in memory
- */
 //design-pattern singleton
 public class TimerRegistry {
 
-    private Multimap<String, Timer> timers;
 
-    public Multimap<String, Timer> getTimersAndReset() {
-        Multimap<String,Timer> oldTimers = timers;
-        timers = Multimaps.synchronizedMultimap(HashMultimap.create());
-        return oldTimers;
+    private Multimap<String, Timer> timers = Multimaps.synchronizedMultimap(HashMultimap.create());
+
+
+    public synchronized void assignTimersAndReset(Multimap<String, Timer> timers) {
+        timers.putAll(this.timers);
+        this.timers.clear();
     }
 
 
@@ -27,10 +25,6 @@ public class TimerRegistry {
         return timer;
     }
 
-
-    private TimerRegistry() {
-        timers = Multimaps.synchronizedMultimap(HashMultimap.create());
-    }
 
     private static TimerRegistry instance = null;
 

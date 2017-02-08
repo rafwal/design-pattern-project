@@ -76,9 +76,15 @@ public class ExecutionService {
                 .thenRunAsync(() -> execute(threadGroup, entityDefinition, task, afterSave))
                 .thenRunAsync(() -> timersRegistryAcceptor.stopListeningIn(executeDTO.getDelayBeforeClosingAcceptor()))
                 .thenRunAsync(() -> timersRegistryAcceptor.processTimers(afterSave, testDef.getAppName()))
+                .thenRunAsync(() -> finish(testExecution))
                 .thenRun(() -> System.out.println(String.format("TestExecution %s ended", afterSave.getId())));
 
         return new RunTestCallbackDTO(afterSave.getId());
+    }
+
+    private void finish(TestExecution testExecution) {
+        testExecution.setState(TestExecutionState.FINISHED);
+        testExecutionRepository.saveAndFlush(testExecution);
     }
 
     private void execute(ThreadGroup threadGroup, EntityDefinition entityDefinition, Task task, TestExecution testExecution) {
@@ -109,7 +115,7 @@ public class ExecutionService {
         executorService.shutdown();
         waitUntilAllThreadsFinishAndGetFinalState(executorService, testExecution.getTimeout());
 
-        testExecution.setState(TestExecutionState.FINISHED);
+        testExecution.setState(TestExecutionState.COLLECTING_METRICS);
         testExecution.setEndTime(Instant.now());
         testExecutionRepository.saveAndFlush(testExecution);
 

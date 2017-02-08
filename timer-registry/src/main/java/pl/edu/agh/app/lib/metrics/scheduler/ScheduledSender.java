@@ -1,7 +1,9 @@
 package pl.edu.agh.app.lib.metrics.scheduler;
 
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import pl.edu.agh.app.lib.metrics.RequestorConnector;
 import pl.edu.agh.app.lib.metrics.timers.Timer;
 import pl.edu.agh.app.lib.metrics.util.JsonUtils;
@@ -17,11 +19,11 @@ public class ScheduledSender {
 
     private final TimerRegistry timerRegistry;
     private final RequestorConnector requestorConnector;
-
     private ScheduledExecutorService executorService;
-    /*
-        handles sending data in interval given in SECONDS
-     */
+
+    private Multimap<String, Timer> timers = Multimaps.synchronizedMultimap(HashMultimap.create());
+
+
     public void startWithIntervalInSeconds(long interval) {
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleWithFixedDelay(this::sendData,
@@ -36,15 +38,18 @@ public class ScheduledSender {
         Sends data and clears timer registry
      */
     private void sendData() {
-
-        Multimap<String, Timer> timers = timerRegistry.getTimersAndReset();
+        timerRegistry.assignTimersAndReset(timers);
         String json = JsonUtils.toJson(timers.asMap());
 
-        try {
-            requestorConnector.doSend(json);
-        } catch (IOException e) {
-            e.printStackTrace();
+        synchronized(this) {
+            try {
+                requestorConnector.doSend(json);
+                timers.clear();
+            } catch (IOException e) {
+                System.err.println("COULD NOT CONNECT");
+            }
         }
+
     }
 
 

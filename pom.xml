@@ -6,7 +6,7 @@
 
     <groupId>pl.rwalski</groupId>
     <artifactId>design-patterns</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <modules>
         <module>timer-registry</module>
         <module>requestor</module>

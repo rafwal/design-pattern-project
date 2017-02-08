@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Component
 public class TimersRegistryAcceptor {
 
+
     private TimersGatherer timersGatherer;
 
     @Autowired
@@ -98,10 +99,12 @@ public class TimersRegistryAcceptor {
         String line;
         if (!"SEND TIMERS".equals(in.readLine())) {
             System.err.println("Request ejected on step one");
+            return;
         }
 
         if (!appName.equals(in.readLine())) {
             System.err.println("Request ejected on step two - wrong app name");
+            return;
         }
 
         StringBuilder sb = new StringBuilder();

@@ -34,7 +34,7 @@ CREATE TABLE TestExecution (
   timeout INT8,
   startTime TIMESTAMP,
   endTime TIMESTAMP,
-  state VARCHAR(15)
+  state VARCHAR(20)
 );
 
 CREATE SEQUENCE SingleExecutionSequence;
