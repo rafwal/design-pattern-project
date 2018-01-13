@@ -12,7 +12,7 @@ import pl.edu.agh.app.requestor.repository.SingleExecutionRepository;
 import pl.edu.agh.app.requestor.repository.TestExecutionRepository;
 import pl.edu.agh.app.requestor.repository.TimerRepository;
 import pl.edu.agh.app.requestor.util.converter.SingleTestExecutionConverter;
-import pl.edu.agh.app.requestor.util.converter.TimerConverterr;
+import pl.edu.agh.app.requestor.util.converter.TimerConverter;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -79,7 +79,7 @@ public class TestResultService {
     private Multimap<String, TimerSimpleDTO> getSimpleTimerMultimap(Long testExecutionId) {
         Multimap<String, TimerSimpleDTO> timersMultimap = ArrayListMultimap.create();
         timerRepository.getByTestExecutionId(testExecutionId)
-                .forEach(t -> timersMultimap.put(t.getName(), TimerConverterr.toSimpleDTO(t)));
+                .forEach(t -> timersMultimap.put(t.getName(), TimerConverter.toSimpleDTO(t)));
         return timersMultimap;
     }
 
