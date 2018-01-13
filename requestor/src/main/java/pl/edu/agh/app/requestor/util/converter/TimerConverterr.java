@@ -6,7 +6,7 @@ import pl.edu.agh.app.requestor.model.entity.execution.Timer;
 
 import java.time.Duration;
 
-public class TimerConverter {
+public class TimerConverterr {
 
     public static TimerSimpleDTO toSimpleDTO(Timer timer) {
         return TimerSimpleDTO.builder()

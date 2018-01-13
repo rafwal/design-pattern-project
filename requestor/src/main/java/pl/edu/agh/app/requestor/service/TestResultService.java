@@ -2,20 +2,17 @@ package pl.edu.agh.app.requestor.service;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.app.requestor.dto.AverageResultsDTO;
 import pl.edu.agh.app.requestor.dto.SingleExecutionDTO;
 import pl.edu.agh.app.requestor.dto.TimerSimpleDTO;
-import pl.edu.agh.app.requestor.model.entity.execution.SingleExecution;
 import pl.edu.agh.app.requestor.model.entity.execution.TestExecution;
-import pl.edu.agh.app.requestor.model.entity.execution.Timer;
 import pl.edu.agh.app.requestor.repository.SingleExecutionRepository;
 import pl.edu.agh.app.requestor.repository.TestExecutionRepository;
 import pl.edu.agh.app.requestor.repository.TimerRepository;
 import pl.edu.agh.app.requestor.util.converter.SingleTestExecutionConverter;
-import pl.edu.agh.app.requestor.util.converter.TimerConverter;
+import pl.edu.agh.app.requestor.util.converter.TimerConverterr;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -82,7 +79,7 @@ public class TestResultService {
     private Multimap<String, TimerSimpleDTO> getSimpleTimerMultimap(Long testExecutionId) {
         Multimap<String, TimerSimpleDTO> timersMultimap = ArrayListMultimap.create();
         timerRepository.getByTestExecutionId(testExecutionId)
-                .forEach(t -> timersMultimap.put(t.getName(), TimerConverter.toSimpleDTO(t)));
+                .forEach(t -> timersMultimap.put(t.getName(), TimerConverterr.toSimpleDTO(t)));
         return timersMultimap;
     }
 
